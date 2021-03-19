@@ -2,7 +2,11 @@
 
 set -exo pipefail
 
-echo "before beginning echo"
+if [ -z "$*" ] || [ "$#" != 1 ]; then
+  echo "Only 1 input \"the step name\" is required as argument to the script. Number of arguments present are $#"
+  echo "Arguments received are $*"
+  exit 1
+fi
 
 step_name=$1
 
@@ -16,14 +20,6 @@ echo "DEBUGGING: beginning"
 GITHUB_WORKFLOW_URL=$(curl -sH "Authorization: Bearer ${GITHUB_TOKEN}" \
   "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" | \
   jq -r '.workflow_url')
-
-echo "run url"
-curl -sH "Authorization: Bearer ${GITHUB_TOKEN}" \
-  "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-
-echo "run jobs"
-curl -sH "Authorization: Bearer ${GITHUB_TOKEN}" \
-  "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/jobs"
 
 # Show the current run_number of the workflow run
 echo "CURRENT_RUN_NUMBER is ${GITHUB_RUN_NUMBER}"
