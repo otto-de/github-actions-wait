@@ -1,0 +1,11 @@
+name: 'Wait'
+description: 'Wait'
+inputs:
+  step-name:  # id of input
+    description: 'Step Name'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ./wait.sh ${{ inputs.step-name }}
+      shell: bash
