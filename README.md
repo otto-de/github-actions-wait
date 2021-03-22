@@ -16,8 +16,9 @@ The rerun will also wait for any run which has already crossed the wait step.
 # Below are the steps to achieve parallel jobs running in github workflow to wait on a particular step
 
 1. Name the step as needed. For example: "Wait for other pipelines"
-2. Use the action "otto-de/github-actions-wait@v1.0" with the step name as input as shown below. 
+2. Use the action "otto-de/github-actions-wait@v1" with the step name as input as shown below. 
 The argument to the script should be the same as step name.
+Accept the env defined in the sample shown below as it is, since the env set is used to make API calls to github
 3. Place the wait step/s in the workflow in such places so that the following steps should not run in parallel by other jobs.
    An example of this wait step could be the terraform apply steps which use remote state lock feature. If 2 jobs try to use same remote state the 2nd job will fail. 
 4. How the script works is as below:
@@ -33,7 +34,7 @@ The argument to the script should be the same as step name.
   - name: Wait
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    uses: otto-de/github-actions-wait@v1.0
+    uses: otto-de/github-actions-wait@v1
     with:
       step-name: "Wait"
 ``` 
