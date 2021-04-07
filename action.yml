@@ -1,5 +1,8 @@
-name: 'Wait'
-description: 'Wait'
+name: 'Wait-For-Other-Pipelines'
+description: 'Wait for other pipelines'
+branding:
+  icon: pause
+  color: purple
 inputs:
   step-name:  # id of input
     description: 'Step Name'
